@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Larry Control Panel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f5f7fa;
+            color: #333;
+            margin: 0;
+            padding: 2em 0;
+        }
+        h1 {
+            font-size: 4vw;
+            margin-bottom: 1em;
+            font-weight: 600;
+        }
+        .container {
+            background-color: #ffffff;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2em 2.5em;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .btn {
+            font-size: 1.5rem;
+            padding: 0.6em 1.8em;
+            margin: 0.5em;
+            border: none;
+            border-radius: 8px;
+            background-color: #3b82f6;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+        .btn:hover {
+            background-color: #2563eb;
+        }
+        .btn-stop {
+            background-color: #ef4444;
+        }
+        .btn-stop:hover {
+            background-color: #b91c1c;
+        }
+        .btn.active {
+            background-color: #22c55e !important;
+        }
+        .row {
+            margin: 1.2em 0;
+        }
+        .speed-label {
+            font-size: 1.25rem;
+            display: block;
+            margin-bottom: 0.5em;
+            font-weight: 500;
+        }
+        .speed-value {
+            font-weight: 700;
+            margin-left: 0.3em;
+            color: #2563eb;
+        }
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #d1d5db;
+            outline: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+            margin-top: -7px;
+        }
+        input[type="range"]:hover::-webkit-slider-thumb {
+            background: #2563eb;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        input[type="range"]:hover::-moz-range-thumb {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Larry Control Panel</h1>
+
+        <!-- Up button row -->
+        <div class="row">
+            <a href="/UP"><button class="btn">Up</button></a>
+        </div>
+
+        <!-- Left / Right row -->
+        <div class="row">
+            <a href="/LEFT"><button class="btn">Left</button></a>
+            <a href="/RIGHT"><button class="btn">Right</button></a>
+        </div>
+
+        <!-- Down button row -->
+        <div class="row">
+            <a href="/DOWN"><button class="btn">Down</button></a>
+        </div>
+
+        <!-- Stop button row -->
+        <div class="row">
+            <a href="/STOP"><button class="btn btn-stop">Stop</button></a>
+        </div>
+
+        <!-- Speed control row -->
+        <div class="row">
+            <form action="/SPEED" method="GET">
+                <span class="speed-label">
+                    Speed:
+                    <span id="speedValue" class="speed-value">200</span>
+                </span>
+                <input
+                    type="range"
+                    id="speed"
+                    name="speed"
+                    min="0"
+                    max="255"
+                    value="200"
+                    oninput="document.getElementById('speedValue').textContent = this.value"
+                >
+                <br><br>
+                <button class="btn" type="submit">Set Speed</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.classList.contains('btn-stop')) {
+                    // Remove active from all buttons when stop is clicked
+                    document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+                } else {
+                    // Remove active from all buttons, then add active to clicked button
+                    document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
